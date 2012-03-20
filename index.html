@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sv">
+	<head>
+		<meta charset="utf-8">
+		<title>sl_countDownR</title>
+		<style>
+			h1 {
+				font-family: sans-serif;
+				font-size: 100px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+
+		<h1 id="sl_countdown"></h1>
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script>
+
+			$(document).ready(function  () {
+			
+				function sl_countDownR (selector, date, time) {
+
+					/**
+					 * Version 1.0
+					 * Author: Stefan Ledin
+					 * stefanledin.se
+					 * @stefanledin
+					 * 
+					 * Thx to http://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
+					 */
+
+					var dateString = date;
+					var timeString = time;
+
+					dateString = dateString.split('-');
+					timeString = timeString.split(':');
+
+					var editMonth = parseInt(dateString[1]) -1;
+
+					var constructDate = new Date(
+						parseInt(dateString[0]), // Year
+						editMonth, // Month
+						parseInt(dateString[2]), // Day
+						parseInt(timeString[0]), // Hour
+						parseInt(timeString[1]) // Minute
+					);
+
+					var interval = setInterval(function  () {
+
+						var rightNow = new Date();
+
+						var diff = constructDate-rightNow;
+
+						var seconds = Math.floor(diff/1000)%60;
+						var minutes = Math.floor((diff / (1000*60) % 60));
+						var hours = Math.floor((diff / (1000*60*60)) % 24);
+						var days = Math.floor((diff / (1000*60*60*24)));
+
+						selector.text(days+':'+hours+':'+minutes +':'+seconds);
+
+						if (days === 0 && hours === 0 && minutes === 0 && seconds <= 10) {
+							
+							selector.css('color','red');
+
+							if (seconds === 0) {
+								clearInterval(interval);	
+							}
+							
+						}
+						
+
+					}, 1000);
+
+				}
+
+				// Parametrar: jQuery selector, datum (ÅÅÅÅ-MM-DD), tid(HH:MM)
+				sl_countDownR($('h1#sl_countdown'),'2012-03-20', '21:36');
+
+			});
+		
+		</script>
+	</body>
+</html>
