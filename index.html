@@ -23,7 +23,7 @@
 				function sl_countDownR (selector, date, time) {
 
 					/**
-					 * Version 1.0
+					 * Version 1.2
 					 * Author: Stefan Ledin
 					 * stefanledin.se
 					 * @stefanledin
@@ -37,19 +37,19 @@
 					dateString = dateString.split('-');
 					timeString = timeString.split(':');
 
-					var editMonth = parseInt(dateString[1]) -1;
+					var editMonth = parseInt(dateString[1], 10) -1;
 
 					var constructDate = new Date(
-						parseInt(dateString[0]), // Year
+						parseInt(dateString[0], 10), // Year
 						editMonth, // Month
-						parseInt(dateString[2]), // Day
-						parseInt(timeString[0]), // Hour
-						parseInt(timeString[1]) // Minute
+						parseInt(dateString[2], 10), // Day
+						parseInt(timeString[0], 10), // Hour
+						parseInt(timeString[1], 10) // Minute
 					);
 
 					var interval = setInterval(function  () {
 
-						var rightNow = new Date();
+						var rightNow = new Date(2012,05,08,23,59);
 
 						var diff = constructDate-rightNow;
 
@@ -57,6 +57,19 @@
 						var minutes = Math.floor((diff / (1000*60) % 60));
 						var hours = Math.floor((diff / (1000*60*60)) % 24);
 						var days = Math.floor((diff / (1000*60*60*24)));
+
+						if (seconds < 10) {
+							seconds = '0' + seconds;
+						}
+						if (minutes < 10) {
+							minutes = '0' + minutes;
+						}
+						if (hours < 10) {
+							hours = '0' + hours;
+						}
+						if (days < 10) {
+							days = '0' + days;
+						}
 
 						selector.text(days+':'+hours+':'+minutes +':'+seconds);
 
