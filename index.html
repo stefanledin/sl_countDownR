@@ -20,19 +20,19 @@
 
 			$(document).ready(function  () {
 			
-				function sl_countDownR (selector, date, time) {
+				/**
+				 * Version 1.2
+				 * Author: Stefan Ledin
+				 * stefanledin.se
+				 * @stefanledin
+				 * 
+				 * Thx to http://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
+				 */
+				function sl_countDownR ($selector, date, time) {
 
-					/**
-					 * Version 1.2
-					 * Author: Stefan Ledin
-					 * stefanledin.se
-					 * @stefanledin
-					 * 
-					 * Thx to http://stackoverflow.com/questions/625433/how-to-convert-milliseconds-to-x-mins-x-seconds-in-java
-					 */
 
-					var dateString = date;
-					var timeString = time;
+					var dateString = date,
+						timeString = time;
 
 					dateString = dateString.split('-');
 					timeString = timeString.split(':');
@@ -49,14 +49,12 @@
 
 					var interval = setInterval(function  () {
 
-						var rightNow = new Date();
-
-						var diff = constructDate-rightNow;
-
-						var seconds = Math.floor(diff/1000)%60;
-						var minutes = Math.floor((diff / (1000*60) % 60));
-						var hours = Math.floor((diff / (1000*60*60)) % 24);
-						var days = Math.floor((diff / (1000*60*60*24)));
+						var rightNow = new Date(),
+							diff = constructDate-rightNow,
+							seconds = Math.floor(diff/1000)%60,
+							minutes = Math.floor((diff / (1000*60) % 60)),
+							hours = Math.floor((diff / (1000*60*60)) % 24),
+							days = Math.floor((diff / (1000*60*60*24)));
 
 						if (seconds < 10) {
 							seconds = '0' + seconds;
@@ -71,18 +69,17 @@
 							days = '0' + days;
 						}
 
-						selector.text(days+':'+hours+':'+minutes +':'+seconds);
+						$selector.text(days+':'+hours+':'+minutes +':'+seconds);
 
 						if (days === 0 && hours === 0 && minutes === 0 && seconds <= 10) {
 							
-							selector.css('color','red');
+							$selector.css('color','red');
 
 							if (seconds === 0) {
 								clearInterval(interval);	
 							}
 							
 						}
-						
 
 					}, 1000);
 
